@@ -20,6 +20,8 @@
 
 }
 
+
+
 .btn:hover{
     --btn-bg-color: linear-gradient(
             90deg,
@@ -44,4 +46,32 @@
 .btn-lg{
     padding: 1rem 2rem;
     font-size: 1.125rem;
+}
+
+.btn[aria-labelledby]{
+
+    position: relative;
+
+    /* 2. BEFORE: Cria a camada de fundo interna (o preenchimento) */
+    &::before{
+        content: "";
+        position: absolute;
+        border-radius: inherit; /* Herda o arredondamento do pai para ficar perfeito */
+        inset: 1.5px;/* INSET: Cria um recuo de 1.5px em todos os lados. 
+        Isso faz a cor do fundo do pai aparecer como se fosse uma borda. */
+        background-color: var(--bg-color);
+
+    }
+
+    /* 3. AFTER: Responsável por exibir o texto com efeito gradiente */
+    &::after{
+        content: attr(aria-labelledby);
+        background: var(--btn-bg-color);
+        /* Aplica o gradiente APENAS nas letras (recorta o fundo) */
+        -webkit-background-clip: text;
+        background-clip: text; 
+        color: transparent;
+        position: relative;
+        z-index: 1;
+    }
 }
